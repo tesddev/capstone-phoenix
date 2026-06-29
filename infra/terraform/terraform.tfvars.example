@@ -1,0 +1,11 @@
+aws_region        = "eu-west-1"
+availability_zone = "eu-west-1a"
+project_name      = "capstone-phoenix"
+instance_type     = "t3.micro"
+worker_count      = 2
+
+# Replace this with your current public IP plus /32.
+# Get it with: curl -s https://checkip.amazonaws.com
+admin_cidr = "REPLACE_WITH_YOUR_IP/32"
+
+public_key_path = "~/.ssh/capstone-phoenix.pub"

@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: taskapp-migration-c2b906d
+  namespace: taskapp
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: backend
+        job: migration
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: ghcr.io/ts-a-devops/taskapp-backend:c2b906d
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              echo "Waiting for Postgres..."
+              python - <<'PY'
+              import os, socket, time
+              host=os.environ.get('DATABASE_HOST','postgres')
+              port=int(os.environ.get('DATABASE_PORT','5432'))
+              deadline=time.time()+180
+              while time.time() < deadline:
+                  try:
+                      s=socket.create_connection((host, port), timeout=3)
+                      s.close()
+                      print('Postgres is reachable')
+                      break
+                  except OSError:
+                      time.sleep(3)
+              else:
+                  raise SystemExit('Timed out waiting for Postgres')
+              PY
+              alembic upgrade head
+          envFrom:
+            - configMapRef:
+                name: taskapp-config
+            - secretRef:
+                name: taskapp-secret
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault

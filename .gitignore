@@ -1,0 +1,36 @@
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+infra/terraform/backend.hcl
+
+# Ansible / kubeconfig / SSH
+infra/ansible/inventory.ini
+infra/ansible/terraform-output.json
+infra/ansible/kubeconfig
+infra/ansible/kubeconfig_raw
+*.pem
+*.key
+
+# Kubernetes secrets and local env
+.env
+.env.*
+*.secret.yaml
+manifests/taskapp/02-secret.yaml
+
+# Evidence binaries can be added intentionally; avoid temp files
+*.tmp

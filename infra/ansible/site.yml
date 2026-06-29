@@ -1,0 +1,34 @@
+---
+- name: Harden all nodes
+  hosts: k3s_cluster
+  become: true
+  roles:
+    - hardening
+
+- name: Install k3s server
+  hosts: server
+  become: true
+  roles:
+    - k3s-server
+
+- name: Install k3s agents
+  hosts: agents
+  become: true
+  roles:
+    - k3s-agent
+
+- name: Verify cluster from server
+  hosts: server
+  become: true
+  tasks:
+    - name: Wait for all nodes to become Ready
+      ansible.builtin.command: kubectl get nodes
+      register: nodes_result
+      changed_when: false
+      retries: 20
+      delay: 10
+      until: "'NotReady' not in nodes_result.stdout and 'Ready' in nodes_result.stdout"
+
+    - name: Show cluster nodes
+      ansible.builtin.debug:
+        var: nodes_result.stdout_lines

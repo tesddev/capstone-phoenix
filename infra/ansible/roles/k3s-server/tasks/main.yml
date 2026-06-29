@@ -1,0 +1,47 @@
+---
+- name: Check whether k3s is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_binary
+
+- name: Build k3s server install command
+  ansible.builtin.set_fact:
+    k3s_install_command: >-
+      curl -sfL https://get.k3s.io |
+      {% if k3s_version | length > 0 %} INSTALL_K3S_VERSION={{ k3s_version }} {% endif %}
+      INSTALL_K3S_EXEC="server {{ k3s_server_extra_args | join(' ') }} --node-ip {{ private_ip }} --advertise-address {{ private_ip }} --tls-san {{ ansible_host }} --tls-san {{ private_ip }}"
+      sh -
+
+- name: Install k3s server
+  ansible.builtin.shell: "{{ k3s_install_command }}"
+  args:
+    executable: /bin/bash
+  changed_when: true
+  when: not k3s_binary.stat.exists
+
+- name: Wait for k3s node token
+  ansible.builtin.wait_for:
+    path: /var/lib/rancher/k3s/server/node-token
+    timeout: 120
+
+- name: Read k3s node token
+  ansible.builtin.slurp:
+    src: /var/lib/rancher/k3s/server/node-token
+  register: k3s_token_file
+
+- name: Store k3s token as a host fact
+  ansible.builtin.set_fact:
+    k3s_node_token: "{{ k3s_token_file.content | b64decode | trim }}"
+
+- name: Fetch kubeconfig from server
+  ansible.builtin.slurp:
+    src: /etc/rancher/k3s/k3s.yaml
+  register: kubeconfig_file
+
+- name: Write local kubeconfig with public API endpoint
+  ansible.builtin.copy:
+    content: "{{ kubeconfig_file.content | b64decode | regex_replace('https://127.0.0.1:6443', 'https://' ~ ansible_host ~ ':6443') }}"
+    dest: "{{ playbook_dir }}/kubeconfig"
+    mode: "0600"
+  delegate_to: localhost
+  become: false

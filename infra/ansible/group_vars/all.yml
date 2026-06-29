@@ -1,0 +1,15 @@
+---
+ansible_user: ubuntu
+ansible_ssh_private_key_file: ~/.ssh/capstone-phoenix
+ansible_python_interpreter: /usr/bin/python3
+
+deploy_user: deploy
+ssh_public_key_path: ~/.ssh/capstone-phoenix.pub
+
+# Empty means the official k3s installer uses the stable channel.
+k3s_version: ""
+
+# k3s server settings. Traefik is disabled because ingress-nginx is installed with Helm.
+k3s_server_extra_args:
+  - "--disable traefik"
+  - "--write-kubeconfig-mode 0644"
