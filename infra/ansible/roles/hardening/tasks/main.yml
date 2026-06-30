@@ -1,20 +1,16 @@
 ---
 - name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-    cache_valid_time: 3600
+  ansible.builtin.command:
+    cmd: apt-get -o DPkg::Lock::Timeout=120 update
+  changed_when: false
 
 - name: Install baseline packages
-  ansible.builtin.apt:
-    name:
-      - curl
-      - ca-certificates
-      - gnupg
-      - ufw
-      - fail2ban
-      - python3
-      - python3-apt
-    state: present
+  ansible.builtin.command:
+    cmd: >-
+      apt-get -o DPkg::Lock::Timeout=120 install -y
+      curl ca-certificates gnupg ufw fail2ban python3 python3-apt
+  register: baseline_packages
+  changed_when: "'0 newly installed' not in baseline_packages.stdout"
 
 - name: Create non-root deploy user
   ansible.builtin.user:

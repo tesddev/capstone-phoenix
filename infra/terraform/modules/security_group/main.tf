@@ -51,6 +51,13 @@ resource "aws_vpc_security_group_ingress_rule" "node_to_node" {
   ip_protocol                  = "-1"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "vpc_node_to_node" {
+  security_group_id = aws_security_group.k3s.id
+  description       = "All private node-to-node k3s traffic inside the VPC CIDR"
+  cidr_ipv4         = var.vpc_cidr
+  ip_protocol       = "-1"
+}
+
 resource "aws_vpc_security_group_egress_rule" "all" {
   security_group_id = aws_security_group.k3s.id
   description       = "Outbound internet for package install, image pulls, and ACME"
