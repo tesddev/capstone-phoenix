@@ -21,7 +21,7 @@ module "security_group" {
 
   project_name = var.project_name
   vpc_id       = module.network.vpc_id
-  admin_cidr   = var.admin_cidr
+  admin_cidrs  = var.admin_cidrs
   vpc_cidr     = var.vpc_cidr
 }
 

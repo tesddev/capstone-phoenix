@@ -16,9 +16,9 @@ variable "availability_zone" {
   default     = "eu-west-1a"
 }
 
-variable "admin_cidr" {
-  description = "Your current public IP in CIDR form, for SSH and Kubernetes API access only. Example: 203.0.113.10/32"
-  type        = string
+variable "admin_cidrs" {
+  description = "List of admin public IPs in CIDR form, for SSH and Kubernetes API access. Example: [\"203.0.113.10/32\", \"203.0.113.11/32\"]"
+  type        = list(string)
 }
 
 variable "public_key_path" {
