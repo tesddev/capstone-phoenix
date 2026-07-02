@@ -47,7 +47,7 @@ spec:
               app: frontend
       containers:
         - name: frontend
-          image: ghcr.io/ts-a-devops/taskapp-frontend:c2b906d
+          image: ghcr.io/ts-a-devops/taskapp-frontend:26da2b0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -74,10 +74,10 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: 50m
-              memory: 128Mi
+              cpu: 20m
+              memory: 64Mi
             limits:
-              cpu: 300m
+              cpu: 100m
               memory: 256Mi
           securityContext:
             allowPrivilegeEscalation: false

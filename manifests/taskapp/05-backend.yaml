@@ -41,13 +41,13 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               app: backend
       containers:
         - name: backend
-          image: ghcr.io/ts-a-devops/taskapp-backend:c2b906d
+          image: ghcr.io/ts-a-devops/taskapp-backend:5d6b8fc
           imagePullPolicy: IfNotPresent
           # If this image still runs migrations in its default entrypoint, uncomment and adjust this
           # command after inspecting the image/logs. The migration Job above must be the only migration runner.
@@ -83,11 +83,11 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 50m
+              memory: 128Mi
             limits:
-              cpu: 700m
-              memory: 768Mi
+              cpu: 200m
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
