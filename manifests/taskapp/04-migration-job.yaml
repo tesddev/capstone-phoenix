@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: taskapp-migration-c2b906d
+  name: taskapp-migration-5d6b8fc
   namespace: taskapp
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -16,7 +16,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: migrate
-          image: ghcr.io/ts-a-devops/taskapp-backend:c2b906d
+          image: ghcr.io/ts-a-devops/taskapp-backend:5d6b8fc
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh", "-c"]
           args:
