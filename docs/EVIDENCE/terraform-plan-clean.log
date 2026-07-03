@@ -1,0 +1,38 @@
+
+Warning: Deprecated Parameter
+
+The parameter "dynamodb_table" is deprecated. Use parameter "use_lockfile"
+instead.
+Acquiring state lock. This may take a few moments...
+module.compute.data.aws_ssm_parameter.ubuntu_ami: Reading...
+aws_key_pair.capstone: Refreshing state... [id=capstone-phoenix-key]
+module.network.aws_vpc.this: Refreshing state... [id=vpc-0e235648657b74e63]
+module.compute.data.aws_ssm_parameter.ubuntu_ami: Read complete after 0s [id=/aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id]
+module.network.aws_internet_gateway.this: Refreshing state... [id=igw-055bd61596aac1662]
+module.network.aws_subnet.public: Refreshing state... [id=subnet-0c520a281ddd8988d]
+module.security_group.aws_security_group.k3s: Refreshing state... [id=sg-01669b50f421e1472]
+module.network.aws_route_table.public: Refreshing state... [id=rtb-0c3688f8bd483598f]
+module.network.aws_route_table_association.public: Refreshing state... [id=rtbassoc-06879e51b8cce54ad]
+module.security_group.aws_vpc_security_group_egress_rule.all: Refreshing state... [id=sgr-0fae0c4d7703b2413]
+module.security_group.aws_vpc_security_group_ingress_rule.vpc_node_to_node: Refreshing state... [id=sgr-0719bf3c0d2480819]
+module.security_group.aws_vpc_security_group_ingress_rule.node_to_node: Refreshing state... [id=sgr-0f9bddb0ed6cbc115]
+module.security_group.aws_vpc_security_group_ingress_rule.http_world: Refreshing state... [id=sgr-0193a37735735f929]
+module.security_group.aws_vpc_security_group_ingress_rule.https_world: Refreshing state... [id=sgr-0ccbbcd1addd3c3b0]
+module.security_group.aws_vpc_security_group_ingress_rule.k8s_api_admin["102.36.151.62/32"]: Refreshing state... [id=sgr-0de90455a805e3b2f]
+module.security_group.aws_vpc_security_group_ingress_rule.k8s_api_admin["197.210.71.136/32"]: Refreshing state... [id=sgr-0a6af1bf0207fc481]
+module.security_group.aws_vpc_security_group_ingress_rule.k8s_api_admin["102.89.69.188/32"]: Refreshing state... [id=sgr-003ccf98874aa56aa]
+module.security_group.aws_vpc_security_group_ingress_rule.k8s_api_admin["154.113.185.22/32"]: Refreshing state... [id=sgr-04c22f9c795a40f93]
+module.security_group.aws_vpc_security_group_ingress_rule.k8s_api_admin["102.89.33.136/32"]: Refreshing state... [id=sgr-0f93ef556ec53259f]
+module.compute.aws_instance.control_plane: Refreshing state... [id=i-083ba4313907ae301]
+module.security_group.aws_vpc_security_group_ingress_rule.ssh_admin["102.89.33.136/32"]: Refreshing state... [id=sgr-08dc18bd17a059b15]
+module.security_group.aws_vpc_security_group_ingress_rule.ssh_admin["102.89.69.188/32"]: Refreshing state... [id=sgr-05c336d3855718f50]
+module.security_group.aws_vpc_security_group_ingress_rule.ssh_admin["154.113.185.22/32"]: Refreshing state... [id=sgr-046c5620540017ea0]
+module.security_group.aws_vpc_security_group_ingress_rule.ssh_admin["197.210.71.136/32"]: Refreshing state... [id=sgr-01ed6ea392e3e4311]
+module.security_group.aws_vpc_security_group_ingress_rule.ssh_admin["102.36.151.62/32"]: Refreshing state... [id=sgr-0791a7be4d4a25f75]
+module.compute.aws_instance.worker[0]: Refreshing state... [id=i-0dc258234824f978f]
+module.compute.aws_instance.worker[1]: Refreshing state... [id=i-097c44795b92b5297]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
