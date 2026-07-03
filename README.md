@@ -12,8 +12,8 @@ This repository provisions and deploys TaskApp on a real multi-node Kubernetes c
 - TLS: cert-manager + Let's Encrypt HTTP-01
 - Ingress: ingress-nginx installed with Helm
 - GitOps: Argo CD
-- Backend image: `ghcr.io/ts-a-devops/taskapp-backend:c2b906d`
-- Frontend image: `ghcr.io/ts-a-devops/taskapp-frontend:c2b906d`
+- Backend image: `ghcr.io/ts-a-devops/taskapp-backend:5d6b8fc`
+- Frontend image: `ghcr.io/ts-a-devops/taskapp-frontend:26da2b0`
 
 ## Structure
 
