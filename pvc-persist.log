@@ -1,0 +1,5 @@
+ id |          message           
+----+----------------------------
+  1 | Data survives pod restart!
+(1 row)
+
