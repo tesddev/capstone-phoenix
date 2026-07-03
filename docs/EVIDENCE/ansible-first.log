@@ -1,0 +1,161 @@
+
+PLAY [Harden all nodes] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Update apt cache] ********************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Install baseline packages] ***********************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Create non-root deploy user] *********************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow deploy user passwordless sudo] *************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Install deploy user's SSH authorized key] ********************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Disable SSH password authentication] *************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Disable root SSH login] **************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Set UFW default incoming policy] *****************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Set UFW default outgoing policy] *****************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow SSH through UFW] ***************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow HTTP through UFW] **************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow HTTPS through UFW] *************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow Kubernetes API through UFW for admin CIDR already restricted by AWS SG] ***
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Allow all private node-to-node traffic from VPC CIDR] ********
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [hardening : Enable UFW] **************************************************
+ok: [cp-1]
+ok: [worker-1]
+ok: [worker-2]
+
+PLAY [Install k3s server] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [cp-1]
+
+TASK [k3s-server : Check whether k3s is already installed] *********************
+ok: [cp-1]
+
+TASK [k3s-server : Build k3s server install command] ***************************
+ok: [cp-1]
+
+TASK [k3s-server : Install k3s server] *****************************************
+skipping: [cp-1]
+
+TASK [k3s-server : Wait for k3s node token] ************************************
+ok: [cp-1]
+
+TASK [k3s-server : Read k3s node token] ****************************************
+ok: [cp-1]
+
+TASK [k3s-server : Store k3s token as a host fact] *****************************
+ok: [cp-1]
+
+TASK [k3s-server : Fetch kubeconfig from server] *******************************
+ok: [cp-1]
+
+TASK [k3s-server : Write local kubeconfig with public API endpoint] ************
+ok: [cp-1 -> localhost]
+
+PLAY [Install k3s agents] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [k3s-agent : Check whether k3s is already installed] **********************
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [k3s-agent : Get k3s node token from server] ******************************
+ok: [worker-1 -> cp-1(18.201.183.214)]
+ok: [worker-2 -> cp-1(18.201.183.214)]
+
+TASK [k3s-agent : Set k3s node token fact] *************************************
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [k3s-agent : Build k3s agent install command] *****************************
+ok: [worker-1]
+ok: [worker-2]
+
+TASK [k3s-agent : Install k3s agent] *******************************************
+skipping: [worker-1]
+skipping: [worker-2]
+
+PLAY [Verify cluster from server] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [cp-1]
+
+TASK [Wait for all nodes to become Ready] **************************************
+ok: [cp-1]
+
+TASK [Show cluster nodes] ******************************************************
+ok: [cp-1] => {
+    "nodes_result.stdout_lines": [
+        "NAME             STATUS   ROLES           AGE     VERSION",
+        "ip-10-42-1-127   Ready    <none>          2d21h   v1.36.2+k3s1",
+        "ip-10-42-1-34    Ready    control-plane   2d21h   v1.36.2+k3s1",
+        "ip-10-42-1-7     Ready    <none>          2d21h   v1.36.2+k3s1"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+cp-1                       : ok=27   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+worker-1                   : ok=21   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+worker-2                   : ok=21   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
