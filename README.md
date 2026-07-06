@@ -27,6 +27,12 @@ gitops/                Argo CD Application
 docs/                  architecture, runbook, cost, evidence
 ```
 
+## Evidence
+
+The screenshot below proves the TaskApp website was reachable before the instance is pulled down for cost savings.
+
+![TaskApp website up](docs/EVIDENCE/website-up.png)
+
 ## Start here
 
 Follow `docs/RUNBOOK.md` from top to bottom.
