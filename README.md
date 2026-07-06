@@ -29,7 +29,7 @@ docs/                  architecture, runbook, cost, evidence
 
 ## Evidence
 
-The screenshot below proves the TaskApp website was reachable before the instance is pulled down for cost savings.
+The screenshot below proves the reachability of the TaskApp website.
 
 ![TaskApp website up](docs/EVIDENCE/website-up.png)
 
